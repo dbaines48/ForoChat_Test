@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "448857747751",
+    "project_id": "forochat-app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:448857747751:android:47757e0ba21e8064",
+        "android_client_info": {
+          "package_name": "com.uninorte.googleauth"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "448857747751-b764gl90rhkar6l5lb7u72s1s4bqm8ri.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.uninorte.googleauth",
+            "certificate_hash": "E2B5ED69659B5558D9A34ED42131F946B70A2E82"
+          }
+        },
+        {
+          "client_id": "448857747751-ohfrf29n0nbhsio3kgmsr3pvmcn236j4.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAQ3WKav8QtRomhPXJB2LJ33PrqPXXFbaQ"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 1
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
