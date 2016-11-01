@@ -3,6 +3,7 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/ForoChat-App.iml" filepath="$PROJECT_DIR$/ForoChat-App.iml" />
+      <module fileurl="file://$PROJECT_DIR$/ForoChat_Test.iml" filepath="$PROJECT_DIR$/ForoChat_Test.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
     </modules>
   </component>
