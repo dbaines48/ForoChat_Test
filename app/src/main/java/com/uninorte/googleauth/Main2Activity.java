@@ -57,7 +57,7 @@ public class Main2Activity extends AppCompatActivity
     String Token;
     boolean thread_running = true;
 
-    private String TAG2 = "TOKEN_TAG";
+    private String TAG2 = "PUSH_TAG";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -72,9 +72,9 @@ public class Main2Activity extends AppCompatActivity
         FirebaseMessaging.getInstance().subscribeToTopic("test");
         String a = FirebaseInstanceId.getInstance().getToken();
 
-        Log.d(TAG2, "ANTES DE MOSTRAR EL TOKEN");
+        /*Log.d(TAG2, "ANTES DE MOSTRAR EL TOKEN");
         Log.d(TAG2, "TOKEN: "+a);
-        Log.d(TAG2, "DESPUES DE MOSTRAR EL TOKEN");
+        Log.d(TAG2, "DESPUES DE MOSTRAR EL TOKEN");*/
 
 
 
@@ -113,6 +113,8 @@ public class Main2Activity extends AppCompatActivity
             @Override
             public void onChildAdded(DataSnapshot dataSnapshot, String s) {
                 Log.d(TAG, "onChildAdded:" + dataSnapshot.getKey());
+                //String url = "http://your.domain.com/path/to/file.php";
+
                 Post post = dataSnapshot.getValue(Post.class);
                 posts.add(post);
                 AdapterPost adapter2 = new AdapterPost(Main2Activity.this, posts);
@@ -147,6 +149,9 @@ public class Main2Activity extends AppCompatActivity
         Post new_post = new Post(nick_user,message);
         String key = mFirebaseDatabase.push().getKey();
         mFirebaseDatabase.child(key).setValue(new_post);
+        String[] messages = new String[1];
+        messages[0] = message;
+        new PushNotifier().execute(messages);
     }
 
     @Override

@@ -1,9 +1,9 @@
 package com.uninorte.googleauth;
 
+import android.os.AsyncTask;
 import android.util.Log;
 
 import com.google.firebase.iid.FirebaseInstanceId;
-import com.google.firebase.iid.FirebaseInstanceIdService;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -14,48 +14,25 @@ import java.net.URL;
 import java.net.URLConnection;
 import java.net.URLEncoder;
 
-
 /**
- * Created by dbain on 31/10/2016.
+ * Created by dbain on 01/11/2016.
  */
 
-public class FirebaseInstanceIDService extends FirebaseInstanceIdService {
-
-
-    private String TAG = "TAG DE MUESTRA";
+public class PushNotifier extends AsyncTask<String, Void, String> {
     @Override
-    public void onTokenRefresh() {
+    protected String doInBackground(String... params) {
+        /*POST PARA PUSH NOTIFICATIONS*/
 
-        String token = FirebaseInstanceId.getInstance().getToken();
-        Log.d(TAG, token);
-
-        System.out.println("TOKEN ES " + token);
-        registerToken(token);
-    }
-
-    private void registerToken(String token){
-        /*OkHttpClient client = new OkHttpClient();
-        RequestBody body = new FormBody.Builder()
-                .add("Token",token)
-                .build();
-
-        Request request = new Request.Builder()
-                .url("http://190.144.171.172/g2movil/register.php") //Poner nuestra propia URL de metodo
-                .post(body)
-                .build();
-
-        try {
-            String response = client.newCall(request).execute().body().string();
-            Log.d("RESPUESTA_HP_PHP", response);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }*/
-
+        String post = params[0];
         try{
-            URL url = new URL("http://190.144.171.172/g2movil/register.php");
+            URL url = new URL("http://190.144.171.172/g2movil/push_notifications.php");
 
+            String my_token = FirebaseInstanceId.getInstance().getToken();
             //ACA SE COLOCA LA CADENA CON EL PARAMETRO
-            String data = URLEncoder.encode("Token", "UTF-8") + "=" + URLEncoder.encode(token, "UTF-8");
+            String data = URLEncoder.encode("Message", "UTF-8") + "=" + URLEncoder.encode(post, "UTF-8");
+            data += "&" + URLEncoder.encode("Forum", "UTF-8") + "=" + URLEncoder.encode("Foro General" , "UTF-8");
+            data += "&" + URLEncoder.encode("Token", "UTF-8") + "=" + URLEncoder.encode(my_token, "UTF-8");
+
             BufferedReader reader = null;
             String text = "";
 
@@ -76,7 +53,7 @@ public class FirebaseInstanceIDService extends FirebaseInstanceIdService {
                 sb.append(line + "\n");
             }
             text = sb.toString();
-            Log.d(TAG, text);
+            Log.d("PUSH_RESULT", text);
 
         } catch (MalformedURLException e) {
             e.printStackTrace();
@@ -84,6 +61,7 @@ public class FirebaseInstanceIDService extends FirebaseInstanceIdService {
             e.printStackTrace();
         }
 
-
+        /*END POST PARA PUSH NOTIFICATIONS*/
+        return "";
     }
 }
