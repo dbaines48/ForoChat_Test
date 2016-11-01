@@ -34,6 +34,14 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.iid.FirebaseInstanceId;
 import com.google.firebase.messaging.FirebaseMessaging;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.net.URLConnection;
+import java.net.URLEncoder;
 import java.util.ArrayList;
 
 //Aquí cerramos la sesión
@@ -46,13 +54,29 @@ public class Main2Activity extends AppCompatActivity
     private ArrayList<Post> posts;
     private String nick_user;
     private ListView lv;
+    String Token;
+    boolean thread_running = true;
+
+    private String TAG2 = "TOKEN_TAG";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main2);
 
+        /*try {
+            FirebaseInstanceId.getInstance().deleteInstanceId();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }*/
+
         FirebaseMessaging.getInstance().subscribeToTopic("test");
-        FirebaseInstanceId.getInstance().getToken();
+        String a = FirebaseInstanceId.getInstance().getToken();
+
+        Log.d(TAG2, "ANTES DE MOSTRAR EL TOKEN");
+        Log.d(TAG2, "TOKEN: "+a);
+        Log.d(TAG2, "DESPUES DE MOSTRAR EL TOKEN");
+
+
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
