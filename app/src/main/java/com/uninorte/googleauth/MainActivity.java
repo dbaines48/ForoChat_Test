@@ -126,6 +126,7 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
             String personName = account.getDisplayName();
             Intent intent = new Intent(MainActivity.this, Main2Activity.class);
             intent.putExtra("nick_user", personName);
+            intent.putExtra("email", account.getEmail());
             startActivity(intent);
         }else
             callbackManager.onActivityResult(requestCode, resultCode, data);

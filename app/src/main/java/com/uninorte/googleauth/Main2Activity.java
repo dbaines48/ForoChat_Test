@@ -17,6 +17,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.facebook.login.LoginManager;
@@ -54,6 +55,8 @@ public class Main2Activity extends AppCompatActivity
     private ArrayList<Post> posts;
     private String nick_user;
     private ListView lv;
+    String id_foro;
+    String title_foro;
     String Token;
     boolean thread_running = true;
 
@@ -100,15 +103,31 @@ public class Main2Activity extends AppCompatActivity
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
+        View hView = navigationView.getHeaderView(0);
+
+        //profile_photo = (ImageView) hView.findViewById(R.id.profile_photo);
+
+        Intent intent = getIntent();
+        String name = intent.getStringExtra("nick_user");
+        String email = intent.getStringExtra("email");
+        //String temp_photo_url = intent.getStringExtra("photo_url");
+
+
+        ((TextView) hView.findViewById(R.id.header_name)).setText(name);
+        ((TextView) hView.findViewById(R.id.header_mail)).setText(email);
+
         posts = new ArrayList<Post>();
         //posts.add(new Post("Daniel Blanco", "Hello World!"));
         lv = (ListView) findViewById(R.id.posts_lv);
         AdapterPost adapter = new AdapterPost(this, posts);
         lv.setAdapter(adapter);
-        Intent intent = getIntent();
         nick_user = intent.getStringExtra("nick_user");
         mFirebaseInstance = FirebaseDatabase.getInstance();
-        mFirebaseDatabase = mFirebaseInstance.getReference("foros").child("foro_g").child("posts");
+        id_foro = intent.getStringExtra("foro_id");
+        mFirebaseDatabase = (id_foro != null) ? mFirebaseInstance.getReference("foros").child(id_foro).child("posts") : mFirebaseInstance.getReference("foros").child("foro_g").child("posts");
+        //mFirebaseDatabase = mFirebaseInstance.getReference("foros").child("foro_g").child("posts");
+        title_foro = intent.getStringExtra("foro_title");
+        getSupportActionBar().setTitle(title_foro != null ? title_foro : "Foro General");
         mFirebaseDatabase.addChildEventListener(new ChildEventListener() {
             @Override
             public void onChildAdded(DataSnapshot dataSnapshot, String s) {
@@ -152,6 +171,8 @@ public class Main2Activity extends AppCompatActivity
         String[] messages = new String[1];
         messages[0] = message;
         new PushNotifier().execute(messages);
+        ((EditText) findViewById(R.id.editText)).setText("");
+        ((EditText) findViewById(R.id.editText)).requestFocus();
     }
 
     @Override
@@ -205,8 +226,14 @@ public class Main2Activity extends AppCompatActivity
 
         if (id == R.id.nav_camera) {
             // Handle the camera action
+            //CREAR FORO
+            Intent intent = new Intent(Main2Activity.this, CreateForoActivity.class);
+            startActivity(intent);
         } else if (id == R.id.nav_gallery) {
-
+            //MIS FOROS
+            Intent intent_foros = new Intent(Main2Activity.this, ForumsActivity.class);
+            intent_foros.putExtra("nick_user", nick_user);
+            startActivity(intent_foros);
         } else if (id == R.id.nav_slideshow) {
 
         } else if (id == R.id.nav_manage) {
